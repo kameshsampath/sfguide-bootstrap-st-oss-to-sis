@@ -21,7 +21,7 @@ with st.expander("Data"):
     y = df.species
     y
 
-with st.expander("Data"):
+with st.expander("Data Visualization"):
     st.scatter_chart(
         df,
         x="bill_length_mm",
@@ -35,14 +35,11 @@ with st.expander("Data"):
 # 'flipper_length_mm', 'body_mass_g', 'sex'
 with st.sidebar:
     st.header("Input Features")
+    # Islands
     islands = df.island.unique().astype(str)
     island = st.selectbox(
         "Island",
         islands,
-    )
-    gender = st.radio(
-        "Gender",
-        ("Male", "Female"),
     )
     # Bill Length
     min, max, mean = (
@@ -50,7 +47,6 @@ with st.sidebar:
         df.bill_length_mm.max(),
         df.bill_length_mm.mean().round(2),
     )
-
     bill_length_mm = st.slider(
         "Bill Length(mm)",
         min_value=min,
@@ -93,3 +89,26 @@ with st.sidebar:
         max_value=max,
         value=mean,
     )
+    # Gender
+    gender = st.radio(
+        "Gender",
+        ("male", "female"),
+    )
+
+# Dataframes for Input features
+data = {
+    "island": island,
+    "bill_length_mm": bill_length_mm,
+    "bill_depth_mm": bill_depth_mm,
+    "flipper_length_mm": flipper_length_mm,
+    "body_mass_g": body_mass_g,
+    "sex": gender,
+}
+input_df = pd.DataFrame(data, index=[0])
+input_penguins = pd.concat([input_df, x], axis=0)
+
+with st.expander("Input Features"):
+    st.write("**Input Penguins**")
+    input_df
+    st.write("**Combined Penguins Data**")
+    input_penguins
