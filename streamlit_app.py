@@ -75,16 +75,15 @@ with st.sidebar:
         df.flipper_length_mm.max(),
         df.flipper_length_mm.mean().round(2),
     )
-    filpper_length_mm = st.slider(
-        "Filpper Length(mm)",
-        min_value=min,
-        max_value=max,
-        value=mean,
+    min, max, mean = (
+        df.flipper_length_mm.min().astype(float),
+        df.flipper_length_mm.max().astype(float),
+        df.flipper_length_mm.mean().round(2),
     )
     # Body Mass
     min, max, mean = (
-        df.body_mass_g.min(),
-        df.body_mass_g.max(),
+        df.body_mass_g.min().astype(float),
+        df.body_mass_g.max().astype(float),
         df.body_mass_g.mean().round(2),
     )
     body_mass_g = st.slider(
