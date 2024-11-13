@@ -20,3 +20,11 @@ with st.expander("Data"):
     st.write("**y**")
     y = df.species
     y
+
+with st.expander("Data"):
+    st.scatter_chart(
+        df,
+        x="bill_length_mm",
+        y="body_mass_g",
+        color="species",
+    )
