@@ -9,3 +9,4 @@ st.write("Welcome to world of Machine Learning with Streamlit.")
 
 # read the csv file
 df = pd.read_csv("data/penguins_cleaned.csv")
+df
