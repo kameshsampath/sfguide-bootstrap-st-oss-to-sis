@@ -76,12 +76,11 @@ with st.sidebar:
         df.flipper_length_mm.mean().round(2),
     )
     flipper_length_mm = st.slider(
-        "FLipper Length(mm)",
+        "Flipper Length(mm)",
         min_value=min,
         max_value=max,
         value=mean,
     )
-
     # Body Mass
     min, max, mean = (
         df.body_mass_g.min().astype(float),
