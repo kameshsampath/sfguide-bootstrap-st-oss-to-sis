@@ -44,17 +44,20 @@ with st.sidebar:
         "Gender",
         ("Male", "Female"),
     )
+    # Bill Length
     min, max, mean = (
         df.bill_length_mm.min(),
         df.bill_length_mm.max(),
         df.bill_length_mm.mean().round(2),
     )
+
     bill_length_mm = st.slider(
         "Bill Length(mm)",
         min_value=min,
         max_value=max,
         value=mean,
     )
+    # Bill Depth
     min, max, mean = (
         df.bill_depth_mm.min(),
         df.bill_depth_mm.max(),
@@ -66,10 +69,11 @@ with st.sidebar:
         max_value=max,
         value=mean,
     )
+    # Filpper Length
     min, max, mean = (
-        df.filpper_length_mm.min(),
-        df.filpper_length_mm.max(),
-        df.filpper_length_mm.mean().round(2),
+        df.flipper_length_mm.min(),
+        df.flipper_length_mm.max(),
+        df.flipper_length_mm.mean().round(2),
     )
     filpper_length_mm = st.slider(
         "Filpper Length(mm)",
@@ -77,10 +81,11 @@ with st.sidebar:
         max_value=max,
         value=mean,
     )
+    # Body Mass
     min, max, mean = (
-        df.filpper_length_mm.min(),
-        df.filpper_length_mm.max(),
-        df.filpper_length_mm.mean().round(2),
+        df.body_mass_g.min(),
+        df.body_mass_g.max(),
+        df.body_mass_g.mean().round(2),
     )
     body_mass_g = st.slider(
         "Body Mass(g)",
