@@ -71,11 +71,6 @@ with st.sidebar:
     )
     # Filpper Length
     min, max, mean = (
-        df.flipper_length_mm.min(),
-        df.flipper_length_mm.max(),
-        df.flipper_length_mm.mean().round(2),
-    )
-    min, max, mean = (
         df.flipper_length_mm.min().astype(float),
         df.flipper_length_mm.max().astype(float),
         df.flipper_length_mm.mean().round(2),
