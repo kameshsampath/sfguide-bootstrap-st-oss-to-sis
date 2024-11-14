@@ -6,7 +6,7 @@ entities:
       name: streamlit_penguin
     main_file: streamlit_app.py
     query_warehouse: kamesh_demos_s
-    stage: streamlit_penguin
+    stage: src
     artifacts:
       - streamlit_app.py
       - environment.yml

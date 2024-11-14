@@ -1,10 +1,29 @@
 import streamlit as st
+import os
 
 # import pandas to read the our data file
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark.session import Session
+from snowflake.snowpark.functions import col
+from snowflake.snowpark.types import StringType, DecimalType
+
+
+def get_active_session() -> Session:
+    """Create or get new Snowflake Session.
+    When running locally it uses the SNOWFLAKE_CONNECTION_NAME environment variable to get the connection name and
+    when running in SiS it uses the context connection.
+    """
+    conn = st.connection(
+        os.getenv(
+            "SNOWFLAKE_CONNECTION_NAME",
+            "devrel-ent",
+        ),
+        type="snowflake",
+    )
+    return conn.session()
+
 
 session = get_active_session()
 
@@ -14,10 +33,20 @@ st.write("Welcome to world of Machine Learning with Streamlit.")
 
 with st.expander("Data"):
     st.write("**Raw Data**")
-    # read the csv file
-    df = session.table("data.penguins")
-    # use the pandas dataframe
+    # read the data from table
+    # cast the columns to right data types with right precision
+    df = session.table("st_ml_app.data.penguins").select(
+        col("island").cast(StringType()).alias("island"),
+        col("species").cast(StringType()).alias("species"),
+        col("bill_length_mm").cast(DecimalType(5, 2)).alias("bill_length_mm"),
+        col("bill_depth_mm").cast(DecimalType(5, 2)).alias("bill_depth_mm"),
+        col("flipper_length_mm").cast(DecimalType(5, 2)).alias("flipper_length_mm"),
+        col("body_mass_g").cast(DecimalType()).alias("body_mass_g"),
+        col("sex").cast(StringType()).alias("sex"),
+    )
     df = df.to_pandas()
+    # make the column names lower to reuse the rest of the code as is
+    df.columns = df.columns.str.lower()
     # define and display
     st.write("**X**")
     X_raw = df.drop("species", axis=1)
@@ -73,8 +102,8 @@ with st.sidebar:
     )
     # Filpper Length
     min, max, mean = (
-        df.flipper_length_mm.min().astype(float),
-        df.flipper_length_mm.max().astype(float),
+        df.flipper_length_mm.min(),
+        df.flipper_length_mm.max(),
         df.flipper_length_mm.mean().round(2),
     )
     flipper_length_mm = st.slider(
