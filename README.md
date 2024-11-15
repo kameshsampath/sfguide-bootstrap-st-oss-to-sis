@@ -4,14 +4,15 @@ Let us build a machine learning application with Python and Streamlit. This quic
 
 - [x] Using streamlit widgets
 - [x] Deploying application to Streamlit cloud
-- [x] Use scikit-learn to do a simple classfication
+- [x] Use scikit-learn to do a simple classification
 - [x] Leverage Streamlit's interactivity to do a ML prediction
 
-A step by step guide of this [Zero to Streamlilt](https://snowflake-labs.github.io/zero-to-streamlit/).
+A step by step guide of this [Bootstrapping Your Transition from Streamlit OSS to Streamlit in Snowflake
+    (SiS)](https://snowflake-labs.github.io/streamlit-oss-to-sis-bootstrap/).
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://kameshsampath-ml-app.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://oss-to-sis-bootstrap.streamlit.app/)
 
 ## Running Locally
 
