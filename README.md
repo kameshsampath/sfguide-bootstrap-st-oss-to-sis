@@ -7,8 +7,7 @@ Let us build a machine learning application with Python and Streamlit. This quic
 - [x] Use scikit-learn to do a simple classification
 - [x] Leverage Streamlit's interactivity to do a ML prediction
 
-A step by step guide of this [Bootstrapping Your Transition from Streamlit OSS to Streamlit in Snowflake
-    (SiS)](https://snowflake-labs.github.io/streamlit-oss-to-sis-bootstrap/).
+A step by step guide of this [Bootstrapping Your Transition from Streamlit OSS to Streamlit in Snowflake(SiS)](https://snowflake-labs.github.io/streamlit-oss-to-sis-bootstrap/).
 
 ## Demo App
 
