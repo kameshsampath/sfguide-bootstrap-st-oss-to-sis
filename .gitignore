@@ -1,2 +1,9 @@
 .streamlit/**
 !.streamlit/config.toml
+.devcontainer/.env
+.direnv
+.cache
+.snowflake
+!.cache/pip/.gitkeep
+config/**
+!config/config.toml
