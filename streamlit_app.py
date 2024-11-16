@@ -2,7 +2,6 @@ import streamlit as st
 
 # import pandas to read the our data file
 import pandas as pd
-import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
 st.title("🤖 Machine Learning App")
@@ -31,7 +30,7 @@ with st.expander("Data Visualization"):
         color="species",
     )
 
-# Ineractivity
+# Interactivity
 # Columns:
 # 'species', 'island', 'bill_length_mm', 'bill_depth_mm',
 # 'flipper_length_mm', 'body_mass_g', 'sex'
@@ -67,7 +66,7 @@ with st.sidebar:
         max_value=max,
         value=mean,
     )
-    # Filpper Length
+    # Flipper Length
     min, max, mean = (
         df.flipper_length_mm.min().astype(float),
         df.flipper_length_mm.max().astype(float),
@@ -115,7 +114,7 @@ with st.expander("Input Features"):
     st.write("**Combined Penguins Data**")
     input_penguins
 
-## Data Prepration
+## Data Preparation
 
 ## Encode X
 X_encode = ["island", "sex"]
