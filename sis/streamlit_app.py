@@ -1,12 +1,50 @@
-import streamlit as st
+import logging
 import os
+import sys
 
-# import pandas to read the our data file
 import pandas as pd
+import streamlit as st
 from sklearn.ensemble import RandomForestClassifier
-from snowflake.snowpark.session import Session
 from snowflake.snowpark.functions import col
-from snowflake.snowpark.types import StringType, DecimalType
+from snowflake.snowpark.session import Session
+from snowflake.snowpark.types import DecimalType, StringType
+
+# Environment variables below will be automatically populated by Snowflake.
+SNOWFLAKE_ACCOUNT = os.getenv("SNOWFLAKE_ACCOUNT")
+SNOWFLAKE_HOST = os.getenv("SNOWFLAKE_HOST")
+SNOWFLAKE_DATABASE = os.getenv("SNOWFLAKE_DATABASE")
+SNOWFLAKE_SCHEMA = os.getenv("SNOWFLAKE_SCHEMA")
+
+# Custom environment variables
+SNOWFLAKE_WAREHOUSE = os.getenv("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH")
+
+
+SERVICE_HOST = os.getenv("SERVER_HOST", "0.0.0.0")
+SERVER_PORT = os.getenv("SERVER_PORT", 8080)
+
+
+def get_logger(logger_name):
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(logging.DEBUG)
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(
+        logging.Formatter("%(name)s [%(asctime)s] [%(levelname)s] %(message)s")
+    )
+    logger.addHandler(handler)
+    return logger
+
+
+def get_login_token():
+    """
+    Read the login token supplied automatically by Snowflake. These tokens
+    are short lived and should always be read right before creating any new connection.
+    """
+    with open("/snowflake/session/token", "r") as f:
+        return f.read()
+
+
+logger = get_logger("penguins-ml-app")
 
 
 def get_active_session() -> Session:
@@ -14,14 +52,19 @@ def get_active_session() -> Session:
     When running locally it uses the SNOWFLAKE_CONNECTION_NAME environment variable to get the connection name and
     when running in SiS it uses the context connection.
     """
-    conn = st.connection(
-        os.getenv(
-            "SNOWFLAKE_CONNECTION_NAME",
-            "devrel-ent",
-        ),
-        type="snowflake",
-    )
-    return conn.session()
+    token = get_login_token()
+    session = Session.builder.configs(
+        {
+            "account": SNOWFLAKE_ACCOUNT,
+            "host": SNOWFLAKE_HOST,
+            "authenticator": "oauth",
+            "token": token,
+            "warehouse": SNOWFLAKE_WAREHOUSE,
+            "database": SNOWFLAKE_DATABASE,
+            "schema": SNOWFLAKE_SCHEMA,
+        }
+    ).getOrCreate()
+    return session
 
 
 session = get_active_session()

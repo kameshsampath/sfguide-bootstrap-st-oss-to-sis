@@ -1,2 +1,4 @@
 .streamlit/**
 !.streamlit/config.toml
+.cache
+work
